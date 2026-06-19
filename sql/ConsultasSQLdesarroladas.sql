@@ -67,20 +67,23 @@ ORDER BY f.id_factura;
 SELECT h.*
 FROM habitacion h
 WHERE h.id_habitacion NOT IN (
-    SELECT r.id_habitacion
-    FROM reservacion r
+    SELECT e.id_habitacion
+    FROM estancia e
+    INNER JOIN reservacion r
+        ON e.id_reservacion = r.id_reservacion
     WHERE r.fecha_inicio <= '2026-07-15'
       AND r.fecha_fin >= '2026-07-10'
 );
-
 -- 12. Huespedes con mayor gasto historico
 SELECT
     hu.id_huesped,
     hu.nombre,
     SUM(df.cantidad * df.precio_unitario) AS total_gastado
 FROM huesped hu
+INNER JOIN reservacion r
+    ON hu.id_huesped = r.id_huesped
 INNER JOIN estancia e
-    ON hu.id_huesped = e.id_huesped
+    ON r.id_reservacion = e.id_reservacion
 INNER JOIN factura f
     ON e.id_estancia = f.id_estancia
 INNER JOIN detalle_factura df
@@ -178,6 +181,7 @@ UPDATE habitacion
 SET estado_actual = 'OCUPADA'
 WHERE num_habitacion = '100';
 
+
 -- 9. Actualizar monto inicial de reservacion
 UPDATE reservacion
 SET monto_inicial = 100.00
@@ -211,7 +215,7 @@ WHERE carnet = 'E010';
 
 -- 5. Eliminar un servicio
 DELETE FROM servicio
-WHERE nombre = 'Spa Premium';
+WHERE nombre = 'Spa';
 
 -- 6. Eliminar huespedes de Honduras
 DELETE FROM huesped
