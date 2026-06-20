@@ -193,46 +193,47 @@ SET fecha_emision = CURRENT_DATE
 WHERE id_factura = 1;
 
 
-/* ==================================================
-   CONSULTAS DELETE
-   ================================================== */
+-- ==========================================
+-- CONSULTAS DELETE
+-- ==========================================
 
--- 1. Eliminar un huesped especifico
-DELETE FROM huesped
-WHERE id_huesped = 10;
+-- 1. Eliminar un detalle de factura específico
+DELETE FROM detalle_factura
+WHERE id_detalle = 1;
 
--- 2. Eliminar una habitacion especifica
+-- 2. Eliminar todos los detalles de factura asociados al servicio Spa
+DELETE FROM detalle_factura
+WHERE id_servicio = 4;
+
+-- 3. Eliminar consumos realizados el 10 de junio de 2026
+DELETE FROM consumo_servicio
+WHERE fecha_consumo = '2026-06-10';
+
+-- 4. Eliminar consumos del servicio Minibar
+DELETE FROM consumo_servicio
+WHERE id_servicio = 2;
+
+-- 5. Eliminar habitaciones disponibles del piso 6
 DELETE FROM habitacion
-WHERE num_habitacion = '120';
+WHERE piso = 6
+  AND estado_actual = 'DISPONIBLE';
 
--- 3. Eliminar una reservacion
-DELETE FROM reservacion
-WHERE id_reservacion = 10;
+-- 6. Eliminar detalles de factura con precio unitario mayor a 20
+DELETE FROM detalle_factura
+WHERE precio_unitario > 20;
 
--- 4. Eliminar un empleado
-DELETE FROM empleado
-WHERE carnet = 'E010';
+-- 7. Eliminar consumos de servicio con cantidad igual a 1
+DELETE FROM consumo_servicio
+WHERE cantidad = 1;
 
--- 5. Eliminar un servicio
-DELETE FROM servicio
-WHERE nombre = 'Spa';
+-- 8. Eliminar detalles de factura con cantidad igual a 3
+DELETE FROM detalle_factura
+WHERE cantidad = 3;
 
--- 6. Eliminar huespedes de Honduras
-DELETE FROM huesped
-WHERE pais = 'Honduras';
+-- 9. Eliminar consumos de servicio con precio unitario menor a 12
+DELETE FROM consumo_servicio
+WHERE precio_unitario < 12;
 
--- 7. Eliminar habitaciones disponibles
-DELETE FROM habitacion
-WHERE estado_actual = 'DISPONIBLE';
-
--- 8. Eliminar reservaciones con monto inicial menor a 20
-DELETE FROM reservacion
-WHERE monto_inicial < 20;
-
--- 9. Eliminar una factura especifica
-DELETE FROM factura
-WHERE id_factura = 10;
-
--- 10. Eliminar un tipo de habitacion
-DELETE FROM tipo_habitacion
-WHERE nombre = 'Suite';
+-- 10. Eliminar detalles de factura asociados al servicio 2
+DELETE FROM detalle_factura
+WHERE id_servicio = 2;
